@@ -8,22 +8,17 @@ example (P Q : Prop) : ¬ (P ∨ Q) ↔ ¬ P ∧ ¬ Q := by
   constructor <;> intro h1
   -- ¬ (P ∨ Q) → ¬ P ∧ ¬ Q
   case mp =>
-    constructor
-    -- ⊢ ¬ P
-    -- つまり、⊢ P → False
+    -- ¬ P と ¬ Q のいずれかがゴールであれば、P または Q を仮定すれば、
+    -- どちらのケースも ⊢ False となる
+    constructor <;> intro h2
     case left =>
-      intro hp -- ⊢ False
       apply h1 -- ⊢ P ∨ Q
       left     -- ⊢ P
-      exact hp
-
-    -- ⊢ ¬ Q
-    -- つまり、⊢ Q → False
+      exact h2
     case right =>
-      intro hq -- ⊢ False
       apply h1 -- ⊢ P ∨ Q
       right    -- ⊢ Q
-      exact hq
+      exact h2
 
   -- ¬ P ∧ ¬ Q → ¬ (P ∨ Q)
   case mpr =>
